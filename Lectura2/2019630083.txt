@@ -1,0 +1,5 @@
+Pregunta a cada computadora conectada su hora para después calcular el promedio de las horas y asignarlo a las demás computadoras.
+A. El Algoritmo de Berkeley
+B. Un receptor WWV
+C. Pares de servidores que calculan una estimación del retraso
+D. GPS

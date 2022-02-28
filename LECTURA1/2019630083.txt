@@ -1,0 +1,6 @@
+
+¿Cuáles son las técnicas para manejar las fallas en un sistema distribuido?
+A. Detección de fallas, enmascarar las fallas, tolerancia a fallas, recuperación de una falla, redundancia.
+B. Checksum de los mensajes, retransmitir mensajes, informar del problema a los clientes, tener un respaldo de la información.
+C. Guardar la información en muchos discos distintos, tolerancia a fallas, redundancia, tener bases de datos replicadas.
+D. Replicar las tablas de nombres en un DNS, checksum de los mensajes, usar roll back de la información, informar del problema a los clientes.

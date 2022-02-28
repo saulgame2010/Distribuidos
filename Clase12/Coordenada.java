@@ -1,0 +1,34 @@
+public class Coordenada {
+
+    private double x, y;
+
+    public Coordenada(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    //Metodo getter de x
+    public double abcisa( ) { return x; }
+
+    //Metodo getter de y
+    public double ordenada( ) { return y; }
+
+    public void setAbcisa(double x){
+        this.x = x;
+    }
+
+    public void setOrdenada(double y){
+        this.y = y;
+    }
+
+    public double getDistancia(){
+        return Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
+    }
+
+    //Sobreescritura del método de la superclase objeto para imprimir con System.out.println( )
+    @Override
+    public String toString( ) {
+        return "[" + x + "," + y + "]: "+getDistancia();
+    }
+
+}
