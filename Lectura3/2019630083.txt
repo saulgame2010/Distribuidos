@@ -1,1 +1,5 @@
-Pregunta
+Hablando de forma general, cuando se dice que la sincronización de relojes no debe ser absoluta y que no es necesario que los relojes de dos procesos estén sincronizados sino que lo único realmente importante es el orden en que ocurren los eventos estamos refiriéndonos al concepto de:
+A. Relojes lógicos de Lamport.
+B. La extensión del método de Lamport.
+C. El algoritmo de Lamport.
+D. Relojes vectoriales.
