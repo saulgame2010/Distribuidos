@@ -1,0 +1,5 @@
+El algoritmo centralizado, distribuido y de anillo de token son ejemplos de soluciones de exclusión mutua basados en:
+A. Permisos.
+B. Tokens.
+C. Sistemas coordinadores.
+D. Peticiones.
