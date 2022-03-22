@@ -167,6 +167,8 @@ public class WebServer {
         int n = Integer.parseInt(params[0]);
         int index = 0;
         int apariciones = 0;
+        long tiempoF = 0, tiempoRes;
+        long tiempoI = System.nanoTime();
         int asciiInicio = 65; // Este es el código ASCII de la 'A'
         int asciiFinal = 90; // Este es el código ASCII de la 'Z'
         Random random = new Random();
@@ -184,8 +186,10 @@ public class WebServer {
             // System.out.println(index);            
             index = cadenota.indexOf("IPN", index + 1);
             apariciones++;
-        }        
-        return String.format("El numero de apariciones de tu cadena es %s\n", apariciones).getBytes();
+        }
+        tiempoF = System.nanoTime();
+        tiempoRes = tiempoF - tiempoI;
+        return String.format("El numero de apariciones de tu cadena es %s en %d nanosegundos\n", apariciones, tiempoRes).getBytes();
     }
 
     private void sendResponse(byte[] responseBytes, HttpExchange exchange) throws IOException {
