@@ -7,15 +7,15 @@ public class Ejemplo {
 
     public static void main(String[] args) throws IOException {
         Ejemplo obj = new Ejemplo();
-        obj.peticionF1Micro();
+        // obj.peticionF1Micro();
         // obj.peticionN1Standard1();
         // obj.peticionN1Standard2();
         // obj.peticionN1Standard4();
         // obj.peticionN1HighCPU2();
-        // obj.peticionN1HighCPU2();
+        // obj.peticionN1HighCPU4();
         // obj.peticionE2Micro();
         // obj.peticionE2HighCPU2();
-        // obj.peticionE2HighCPU4();
+        obj.peticionE2HighCPU4();
     }
 
     public void peticionF1Micro() {
