@@ -33,19 +33,26 @@ import java.util.concurrent.CompletableFuture;
 public class WebClient {
     private HttpClient client;
 
+    //El constructor crea un objeto de tipo HttpClient que utiliza el protocolo HTTP v1.1
     public WebClient() {
         this.client = HttpClient.newBuilder()
                 .version(HttpClient.Version.HTTP_1_1)
                 .build();
     }
 
+    //EL método sendTask recibe la dirección con la que va a establecer conexión y los datos a enviar hacia el servidor
+    //También devuelve los completablefuture en un tipo string
     public CompletableFuture<String> sendTask(String url, byte[] requestPayload) {
+	//Se crea un objeto HttpRequest que permite construir una solicitud HTTP con el método post
         HttpRequest request = HttpRequest.newBuilder()
+		.uri(URI.create(url))
+		.header("X-Debug", "true")
                 .POST(HttpRequest.BodyPublishers.ofByteArray(requestPayload))
-                .uri(URI.create(url))
                 .build();
 
+	//Finalmente se llama el método sendASync para enviar la solicitud de una manera asíncrona
         return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                .thenApply(HttpResponse::body);
+                .thenApply(response -> {return response.body() + "\nHeaders: " + response.headers() + 
+			"\nVersion HTTP: " + response.version() + "\nURL: " + response.uri();});
     }
 }

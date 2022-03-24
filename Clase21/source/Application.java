@@ -26,17 +26,23 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Application {
+    //Aquí se definen las cadenas que correspnden a las direcciones de los endpoints	
     private static final String WORKER_ADDRESS_1 = "http://localhost:8081/task";
     private static final String WORKER_ADDRESS_2 = "http://localhost:8082/task";
 
     public static void main(String[] args) {
+	//Se instancia un objeto de tipo Aggregator
         Aggregator aggregator = new Aggregator();
+	//Se inicializan las cadenas correspondientes a los factores que se multiplicarán en el servidor
         String task1 = "10,200";
         String task2 = "123456789,100000000000000,700000002342343";
-
+	/*
+	 *La clase Aggregator tiene un método llamado sendTaskWOrkers que se encarga de enviar las tareas
+	 *entonces maneja un arreglo para la lista de trabajadores y otro para la lista de tareas
+	 * */
         List<String> results = aggregator.sendTasksToWorkers(Arrays.asList(WORKER_ADDRESS_1, WORKER_ADDRESS_2),
                 Arrays.asList(task1, task2));
-
+	//En este for se van recibiendo los resultados para después imprimirlos
         for (String result : results) {
             System.out.println(result);
         }
