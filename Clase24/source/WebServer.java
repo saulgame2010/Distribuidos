@@ -111,16 +111,16 @@ public class WebServer {
     }
 
     private byte[] calculateResponse(byte[] requestBytes) {
-        System.out.println("Objeto serializado");
+        System.out.println("Se ha completado la serializacion");
         System.out.println(requestBytes);
 
         Demo objeto = (Demo)SerializationUtils.deserialize(requestBytes);
 
-        System.out.println("Objeto deserializado");
+        System.out.println("Se ha completado la deserializacion");
         System.out.println("a = " + objeto.a);
         System.out.println("b = " + objeto.b);
 
-        return String.format("Serialización y deserialización completadas\n").getBytes();
+        return String.format("Operacion de serializacion y deserializacion listas\n").getBytes();
     }
 
     private void handleStatusCheckRequest(HttpExchange exchange) throws IOException {

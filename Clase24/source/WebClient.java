@@ -22,31 +22,29 @@
  *  SOFTWARE.
  */
 
-import java.util.List;
+
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-public class Aggregator {
-    private WebClient webClient;
+public class WebClient {
+    private HttpClient client;
 
-    public Aggregator() {
-        this.webClient = new WebClient();
+    public WebClient() {
+        this.client = HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_1_1)
+                .build();
     }
 
-    public List<String> sendTasksToWorkers(List<String> workersAddresses, List<byte[]> tasks) {
-        CompletableFuture<String>[] futures = new CompletableFuture[workersAddresses.size()];
+    public CompletableFuture<String> sendTask(String url, byte[] requestPayload) {
+        HttpRequest request = HttpRequest.newBuilder()
+                .POST(HttpRequest.BodyPublishers.ofByteArray(requestPayload))
+                .uri(URI.create(url))
+                .build();
 
-        for (int i = 0; i < workersAddresses.size(); i++) {
-            String workerAddress = workersAddresses.get(i);
-            byte[] task = tasks.get(i);
-
-            byte[] requestPayload = task;
-            futures[i] = webClient.sendTask(workerAddress, requestPayload);
-        }
-
-        List<String> results = Stream.of(futures).map(CompletableFuture::join).collect(Collectors.toList());
-
-        return results;
+        return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body);
     }
 }

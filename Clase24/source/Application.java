@@ -30,14 +30,14 @@ public class Application {
 
     public static void main(String[] args) {
         Aggregator aggregator = new Aggregator();
-        Demo object = new Demo(2049, "Blade Runner");
-        System.out.println("Desde el cliente (objeto)");
+        Demo object = new Demo(2049, "Overwatch");
+        System.out.println("Objeto del cliente");
         System.out.println("a = " + object.a);
         System.out.println("b = " + object.b);
 
         byte[] serializado = SerializationUtils.serialize(object);
-        System.out.println("Desde el cliente (serializado)");
-        System.out.println("Serializado = " + serializado);
+        System.out.println("Objeto serializado del cliente");
+        System.out.println("Objeto serializado = " + serializado);
 
         List<String> results = aggregator.sendTasksToWorkers(Arrays.asList(WORKER_ADDRESS_1),
                 Arrays.asList(serializado));

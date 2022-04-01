@@ -22,33 +22,31 @@
  *  SOFTWARE.
  */
 
-import java.io.*;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class SerializationUtils {
-    public static byte[] serialize(Object object) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        ObjectOutput objectOutput = null;
-        try {
-            objectOutput = new ObjectOutputStream(byteArrayOutputStream);
-            objectOutput.writeObject(object);
-            objectOutput.flush();
-            return byteArrayOutputStream.toByteArray();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+public class Aggregator {
+    private WebClient webClient;
 
-        return new byte[]{};
+    public Aggregator() {
+        this.webClient = new WebClient();
     }
 
-    public static Object deserialize(byte[] data) {
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(data);
-        ObjectInput objectInput = null;
-        try {
-            objectInput = new ObjectInputStream(byteArrayInputStream);
-            return objectInput.readObject();
-        } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
+    public List<String> sendTasksToWorkers(List<String> workersAddresses, List<byte[]> tasks) {
+        CompletableFuture<String>[] futures = new CompletableFuture[workersAddresses.size()];
+
+        for (int i = 0; i < workersAddresses.size(); i++) {
+            String workerAddress = workersAddresses.get(i);
+            byte[] task = tasks.get(i);
+
+            byte[] requestPayload = task;
+            futures[i] = webClient.sendTask(workerAddress, requestPayload);
         }
-        return null;
+
+        List<String> results = Stream.of(futures).map(CompletableFuture::join).collect(Collectors.toList());
+
+        return results;
     }
 }
