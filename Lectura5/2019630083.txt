@@ -1,0 +1,5 @@
+Es el mecanismo está basado en gran medida en las llamadas a procedimientos remotos (RPC, por sus siglas en inglés).
+A. Sistema de comunicación.
+B. Objetos distribuidos.
+C. Vinculación de un cliente a un objeto.
+D. Paso de parámetros.
