@@ -111,15 +111,11 @@ public class WebServer {
     }
 
     private byte[] calculateResponse(byte[] requestBytes) {
-        System.out.println("Se ha completado la serializacion");
-        System.out.println(requestBytes);
-
         PoligonoIrreg objeto = (PoligonoIrreg)SerializationUtils.deserialize(requestBytes);
-
-        System.out.println("Se ha completado la deserializacion en el servidor");
-        System.out.println("Vertices del poligono recibidos del cliente\n" + objeto.toString());
+        
+        System.out.println("Polígono al recibirlo del cliente\n" + objeto.toString());
         objeto.anadeVertice(new Coordenada(Math.random()*(200)-100,Math.random()*(200)-100));
-        System.out.println("Vertice anadido\nVertices actuales:\n" + objeto.toString());
+        System.out.println("Poligono antes de enviarse al cliente:\n" + objeto.toString());
         byte[] serializado = SerializationUtils.serialize(objeto);
 
         return serializado;

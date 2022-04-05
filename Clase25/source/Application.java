@@ -30,25 +30,20 @@ public class Application {
 
     public static void main(String[] args) {
         Aggregator aggregator = new Aggregator();
-        PoligonoIrreg poligono = new PoligonoIrreg();
-        System.out.println("Objeto del cliente");
-        System.out.println("Vertices del poligono\n" + poligono.toString());
+        PoligonoIrreg poligono = new PoligonoIrreg();        
+        System.out.println("Poligono antes de enviarse al servidor\n" + poligono.toString());
 
         byte[] serializado = SerializationUtils.serialize(poligono);
-        System.out.println("Objeto serializado del cliente");
-        System.out.println("Objeto serializado = " + serializado);
         List<Object> results = aggregator.sendTasksToWorkers(Arrays.asList(WORKER_ADDRESS_1),
                 Arrays.asList(serializado));
 
         while (true) {
             for (Object result : results) {                
                 PoligonoIrreg poligonoRes = (PoligonoIrreg) result;
-                // (PoligonoIrreg) SerializationUtils.deserialize(result);
-                System.out.println("Se ha recibido el poligono del servidor");
-                System.out.println("Vertices del poligono recibidos del servidor\n" + poligonoRes.toString());
-                System.out.println("Agregando vertice");
+                // (PoligonoIrreg) SerializationUtils.deserialize(result);                
+                System.out.println("Poligono recibido del servidor\n" + poligonoRes.toString());                
                 poligonoRes.anadeVertice(new Coordenada(Math.random() * (200) - 100, Math.random() * (200) - 100));
-                System.out.println("Vertice anadido en el cliente\nVertices actuales:\n" + poligonoRes.toString());
+                System.out.println("Poligono antes de enviarse al servidor:\n" + poligonoRes.toString());
                 serializado = SerializationUtils.serialize(poligonoRes);                
             }
             results = aggregator.sendTasksToWorkers(Arrays.asList(WORKER_ADDRESS_1), Arrays.asList(serializado));
