@@ -22,8 +22,6 @@
  *  SOFTWARE.
  */
 
-package networking;
-
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -52,7 +50,9 @@ public class WebClient {
 
 	//Finalmente se llama el método sendASync para enviar la solicitud de una manera asíncrona
         return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                .thenApply(response -> {return response.body() + "\nHeaders: " + response.headers() + 
-			"\nVersion HTTP: " + response.version() + "\nURL: " + response.uri();});
+                .thenApply(response -> {
+                    return response.body() + "\nHeaders: " + response.headers() + 
+			"\nVersion HTTP: " + response.version() + "\nURL: " + response.uri();
+        });
     }
 }
