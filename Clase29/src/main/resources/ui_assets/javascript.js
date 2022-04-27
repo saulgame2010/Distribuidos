@@ -1,5 +1,5 @@
-$( document ).ready(function() {
-    console.log( "ready!" );
+$(document).ready(function() {
+    console.log("ready!");
 
     // find elements on the page
     var banner = $("#banner-message");
@@ -10,19 +10,19 @@ $( document ).ready(function() {
     var noResultsError = $("#no_results_error");
 
     // handle search click
-    button.on("click", function(){
+    button.on("click", function() {
         banner.addClass("alt");
 
         // send request to the server
         $.ajax({
-          method : "POST",
-          contentType: "application/json",
-          data: createRequest(),
-          url: "procesar_datos", 
-          dataType: "json",
-          success: onHttpResponse
-          });
-      });
+            method: "POST",
+            contentType: "application/json",
+            data: createRequest(),
+            url: "procesar_datos",
+            dataType: "json",
+            success: onHttpResponse
+        });
+    });
 
     function createRequest() {
         var searchQuery = searchBox.val();
@@ -36,7 +36,7 @@ $( document ).ready(function() {
     }
 
     function onHttpResponse(data, status) {
-        if (status === "success" ) {
+        if (status === "success") {
             console.log(data);
             addResults(data);
         } else {
@@ -49,11 +49,8 @@ $( document ).ready(function() {
      */
     function addResults(data) {
         resultsTable.empty();
-
-        var score = data.score;
-        var title = data.title;
         noResultsError.hide();
         resultsWrapper.show();
-        resultsTable.append("<tr><td>Datos recibidos: " + title + "</td><td> Numero de palabras: " + score + "</td></tr>"); 
+        resultsTable.append(data.resultados);
     }
 });

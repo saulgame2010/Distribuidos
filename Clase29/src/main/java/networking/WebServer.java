@@ -60,9 +60,11 @@ public class WebServer {
 
     public WebServer(int port, String workers[]) {
         this.port = port;
+        this.WORKERS = workers;
         this.objectMapper = new ObjectMapper();
         this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         this.objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+        webClient = new WebClient();
     }
 
     public void startServer() {
@@ -141,9 +143,9 @@ public class WebServer {
             for(int i = 0; i < palabras.length; i++){
                 //Se obtienen los bytes de los parametros
                 String palabra = "1757600,"+palabras[i];
-                System.out.println(palabra);
                 byte[] requestPayload = palabra.getBytes();
-                //Se envia la peticion por medio del webClient a los otros 3 web servers              
+                //Se envia la peticion por medio del webClient a los otros 3 web servers  
+                System.out.println("La palabra " + palabra + " se mando a: " + WORKERS[i%3]);            
                 futures[i]  = webClient.sendTask(WORKERS[i%3],requestPayload);
             }
             List<String> resultados = Stream.of(futures).map(CompletableFuture::join).collect(Collectors.toList());
