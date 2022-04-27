@@ -38,7 +38,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.List;
 import java.util.StringTokenizer;
 
 
@@ -47,12 +51,14 @@ public class WebServer {
     private static final String HOME_PAGE_ENDPOINT = "/";
     private static final String HOME_PAGE_UI_ASSETS_BASE_DIR = "/ui_assets/";
     private static final String ENDPOINT_PROCESS = "/procesar_datos";
+    private static String WORKERS[] = new String[3];
 
     private final int port;
     private HttpServer server;
     private final ObjectMapper objectMapper;
+    private WebClient webClient;
 
-    public WebServer(int port) {
+    public WebServer(int port, String workers[]) {
         this.port = port;
         this.objectMapper = new ObjectMapper();
         this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -129,10 +135,19 @@ public class WebServer {
         try {            
             FrontendSearchRequest frontendSearchRequest = objectMapper.readValue(exchange.getRequestBody().readAllBytes(), FrontendSearchRequest.class); 
             System.out.println("Los datos recibidos en el servidor web son:" + frontendSearchRequest.getSearchQuery());
-            String frase = frontendSearchRequest.getSearchQuery();
-            StringTokenizer st = new StringTokenizer(frase);
-            FrontendSearchResponse frontendSearchResponse = new FrontendSearchResponse(frase, st.countTokens());
-        
+            String busqueda = frontendSearchRequest.getSearchQuery();
+            String palabras[] = busqueda.split(" ");
+            CompletableFuture <String>futures[] = new CompletableFuture[palabras.length];
+            for(int i = 0; i < palabras.length; i++){
+                //Se obtienen los bytes de los parametros
+                String palabra = "1757600,"+palabras[i];
+                System.out.println(palabra);
+                byte[] requestPayload = palabra.getBytes();
+                //Se envia la peticion por medio del webClient a los otros 3 web servers              
+                futures[i]  = webClient.sendTask(WORKERS[i%3],requestPayload);
+            }
+            List<String> resultados = Stream.of(futures).map(CompletableFuture::join).collect(Collectors.toList());
+            FrontendSearchResponse frontendSearchResponse = new FrontendSearchResponse(resultados);
             byte[] responseBytes = objectMapper.writeValueAsBytes(frontendSearchResponse);
             sendResponse(responseBytes, exchange);
 

@@ -29,13 +29,15 @@ import java.io.IOException;
 public class Application {
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        int currentServerPort = 9000;
-        if (args.length == 1) {
-            currentServerPort = Integer.parseInt(args[0]);
-        }
+        int currentServerPort = 80;
+        
         Application application = new Application();
+        String workers[] = new String[3];
+        workers[0] = "http://" + args[0] + "/search";
+        workers[1] = "http://" + args[1] + "/search";
+        workers[2] = "http://" + args[2] + "/search";
 
-        WebServer webServer = new WebServer(currentServerPort);
+        WebServer webServer = new WebServer(currentServerPort, workers);
         webServer.startServer();
 
         System.out.println("Servidor escuchando en el puerto: " + currentServerPort);

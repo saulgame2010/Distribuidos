@@ -24,16 +24,20 @@
 
 package model.frontend;
 
-import java.util.Collections;
 import java.util.List;
 
 public class FrontendSearchResponse {
         private String title;
         private int score;
+        private List<String> resultados;
 
         public FrontendSearchResponse(String title, int score) {
             this.title = title;
             this.score = score;
+        }
+
+        public FrontendSearchResponse(List<String> resultados) {
+            this.resultados = resultados;
         }
 
         public String getTitle() {

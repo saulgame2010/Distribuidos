@@ -39,13 +39,13 @@ public class WebClient {
                 .build();
     }
 
-    public CompletableFuture<byte[]> sendTask(String url, byte[] requestPayload) {
+    public CompletableFuture<String> sendTask(String url, byte[] requestPayload) {
         HttpRequest request = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofByteArray(requestPayload))
                 .uri(URI.create(url))
                 .build();
 
-        return client.sendAsync(request, HttpResponse.BodyHandlers.ofByteArray())
+        return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                 .thenApply(HttpResponse::body);
     }
 }
