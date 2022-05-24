@@ -1,0 +1,5 @@
+Son cadenas llamadas nombres de dominio.
+A. Nombres DNS.
+B. Alias.
+C. Espacios de nombres.
+D. Nombres impuros.
