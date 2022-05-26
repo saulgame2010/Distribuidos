@@ -1,0 +1,5 @@
+Es clave para proveer de alta disponibilidad y tolerancia de fallos a los sistemas distribuidos.
+A. La réplica.
+B. Tolerancia a fallas.
+C. Mejora de rendimiento.
+D. Transparencia de replicación.
