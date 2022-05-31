@@ -1,0 +1,5 @@
+Referencias de servicio, transparencia y acoplamiento bajo son algunas características de:
+A. Servicios web.
+B. Patrones de diseño de servicios web.
+C. Arquitectura de un servicio web.
+D. Protocolo SOAP.
