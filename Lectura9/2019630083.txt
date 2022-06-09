@@ -1,0 +1,5 @@
+La arquitectura orientada a servicios y el grid son parte de:
+A. La aplicaciones de los servidores web.
+B. Los requerimientos de las aplicaciones grid.
+C. Los middlewares.
+D. El mashup.
